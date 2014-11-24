@@ -3,12 +3,14 @@ if (!defined('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
 // Build extension name vars - used for plugin registration, flexforms and similar
-$extensionName = t3lib_div::underscoredToUpperCamelCase($_EXTKEY);
+$extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($_EXTKEY);
 $pluginSignature = strtolower($extensionName) . '_pi1';
 
-Tx_Extbase_Utility_Extension::registerPlugin(
-	$_EXTKEY,
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+	'SotaStudio.' . $_EXTKEY,
 	'Pi1',
 	'FlexSlider'
 );
@@ -20,13 +22,13 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSi
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
 
 // Add custom Flexform fields
-t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform.xml');
+ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform.xml');
 
 // Add static TypoScript
-t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'FlexSlider');
+ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'FlexSlider');
 
-t3lib_extMgm::addLLrefForTCAdescr('tx_flexslider_domain_model_flexslider', 'EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_csh_tx_flexslider_domain_model_flexslider.xml');
-t3lib_extMgm::allowTableOnStandardPages('tx_flexslider_domain_model_flexslider');
+ExtensionManagementUtility::addLLrefForTCAdescr('tx_flexslider_domain_model_flexslider', 'EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_csh_tx_flexslider_domain_model_flexslider.xml');
+ExtensionManagementUtility::allowTableOnStandardPages('tx_flexslider_domain_model_flexslider');
 $TCA['tx_flexslider_domain_model_flexslider'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:flexslider/Resources/Private/Language/locallang_db.xml:tx_flexslider_domain_model_flexslider',
@@ -48,8 +50,8 @@ $TCA['tx_flexslider_domain_model_flexslider'] = array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/FlexSlider.php',
-		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_flexslider_domain_model_flexslider.gif'
+		'dynamicConfigFile' => ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/FlexSlider.php',
+		'iconfile' => ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_flexslider_domain_model_flexslider.gif'
 	),
 );
 
@@ -58,5 +60,5 @@ $TCA['tx_flexslider_domain_model_flexslider'] = array(
  */
 if (TYPO3_MODE === 'BE') {
 	// Add Plugin to CE Wizard
-	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses'][$pluginSignature . '_wizicon'] = t3lib_extMgm::extPath($_EXTKEY) . 'Resources/Private/Php/class.' . $_EXTKEY . '_wizicon.php';
+	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses'][$pluginSignature . '_wizicon'] = ExtensionManagementUtility::extPath($_EXTKEY) . 'Resources/Private/Php/class.' . $_EXTKEY . '_wizicon.php';
 }

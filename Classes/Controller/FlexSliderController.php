@@ -1,9 +1,9 @@
 <?php
-
+namespace SotaStudio\Flexslider\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2013 Andy Hausmann <ah@sota-studio.de>
+ *  (c) 2012-2014 Andy Hausmann <ah@sota-studio.de>, SOTA Studio
  *
  *  All rights reserved
  *
@@ -24,34 +24,41 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use SotaStudio\Flexslider\Domain\Repository\FlexSliderRepository,
+	SotaStudio\Flexslider\Utility\EmConfiguration,
+	TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface,
+	TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+
 /**
  * Main Controller.
  *
- * @author Andy Hausmann <ah@sota-studio.de>
+ * @author Andy Hausmann <ah@sota-studio.de>, SOTA Studio
  * @package flexslider
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @subpackage Controller
  */
-class Tx_Flexslider_Controller_FlexSliderController extends Tx_Extbase_MVC_Controller_ActionController {
+class FlexSliderController extends ActionController {
 
-	/**
-	 * @var tslib_cObj
-	 */
+	/** @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController */
+	protected $TSFE;
+
+	/** @var \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer */
 	protected $contentObject;
 
 	/**
 	 * flexSliderRepository
 	 *
-	 * @var Tx_Flexslider_Domain_Repository_FlexSliderRepository
+	 * @var \SotaStudio\Flexslider\Domain\Repository\FlexSliderRepository
 	 */
 	protected $flexSliderRepository;
+
 
 	/**
 	 * injectFlexSliderRepository
 	 *
-	 * @param Tx_Flexslider_Domain_Repository_FlexSliderRepository $flexSliderRepository
+	 * @param \SotaStudio\Flexslider\Domain\Repository\FlexSliderRepository $flexSliderRepository
 	 * @return void
 	 */
-	public function injectFlexSliderRepository(Tx_Flexslider_Domain_Repository_FlexSliderRepository $flexSliderRepository) {
+	public function injectFlexSliderRepository(FlexSliderRepository $flexSliderRepository) {
 		$this->flexSliderRepository = $flexSliderRepository;
 	}
 
@@ -63,17 +70,19 @@ class Tx_Flexslider_Controller_FlexSliderController extends Tx_Extbase_MVC_Contr
 	 */
 	public function initializeAction() {
 		$this->contentObject = $this->configurationManager->getContentObject();
+		$this->TSFE =& $GLOBALS['TSFE'];
 
 		// Fallback to current pid if no storagePid is defined
-		$configuration = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+		$configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 		if(empty($configuration['persistence']['storagePid'])){
-			$currentPid['persistence']['storagePid'] = $GLOBALS['TSFE']->id;
+			$currentPid['persistence']['storagePid'] = $this->TSFE->id;
 			$this->configurationManager->setConfiguration(array_merge($configuration, $currentPid));
 		}
 	}
 
 	/**
-	 * action list
+	 * Action list
+	 * Displays all slider elements.
 	 *
 	 * @return void
 	 */
@@ -81,7 +90,7 @@ class Tx_Flexslider_Controller_FlexSliderController extends Tx_Extbase_MVC_Contr
 		$flexSliders = $this->flexSliderRepository->findAll();
 
 		$tplObj = array(
-			'configuration' => Tx_Flexslider_Utility_EmConfiguration::getConfiguration(),
+			'configuration' => EmConfiguration::getConfiguration(),
 			'data' => $this->contentObject->data,
 			'altUid' => uniqid('alt'),
 			'flexSliders' => $flexSliders

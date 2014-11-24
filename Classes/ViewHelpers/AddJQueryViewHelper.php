@@ -1,9 +1,9 @@
 <?php
-
+namespace SotaStudio\Flexslider\ViewHelpers;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2013 Andy Hausmann <ah@sota-studio.de>
+ *  (c) 2012-2014 Andy Hausmann <ah@sota-studio.de>, SOTA Studio
  *
  *  All rights reserved
  *
@@ -24,6 +24,11 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use SotaStudio\Flexslider\Utility\Div,
+	TYPO3\CMS\Core\Messaging\FlashMessage,
+	TYPO3\CMS\Core\Utility\ExtensionManagementUtility,
+	TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
+
 /**
  *
  * A view helper for adding jQuery to the frontend.
@@ -36,11 +41,11 @@
  * <output>
  * </output>
  *
- * @author Andy Hausmann <ah@sota-studio.de>
+ * @author Andy Hausmann <ah@sota-studio.de>, SOTA Studio
  * @package flexslider
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @subpackage ViewHelpers
  */
-class Tx_Flexslider_ViewHelpers_AddJQueryViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractTagBasedViewHelper {
+class AddJQueryViewHelper extends AbstractTagBasedViewHelper {
 
 	/**
 	 * Adds T3Jquery as Lib
@@ -54,24 +59,24 @@ class Tx_Flexslider_ViewHelpers_AddJQueryViewHelper extends Tx_Fluid_Core_ViewHe
 	 */
 	public function render($altJQueryFile = NULL, $moveToFooter = FALSE) {
 		// checks if t3jquery is loaded
-		if (t3lib_extMgm::isLoaded('t3jquery')) {
-			require_once(t3lib_extMgm::extPath('t3jquery').'class.tx_t3jquery.php');
+		if (ExtensionManagementUtility::isLoaded('t3jquery')) {
+			require_once(ExtensionManagementUtility::extPath('t3jquery').'class.tx_t3jquery.php');
 		}
 		// if t3jquery is loaded and the custom Library had been created
 		if (T3JQUERY === TRUE) {
-			tx_t3jquery::addJqJS();
+			\tx_t3jquery::addJqJS();
 
 		} else {
 			if ($altJQueryFile) {
-				Tx_Flexslider_Utility_Div::addCssJsFile(
+				div::addCssJsFile(
 					$altJQueryFile,
 					$moveToFooter
 				);
 			} else {
-				Tx_Flexslider_Utility_Div::renderFlashMessage(
+				Div::renderFlashMessage(
 					'jQuery not loaded',
 					'jQuery could not be loaded. Please check the path to the alternative jQuery library or simply use the Extension t3jquery.',
-					t3lib_FlashMessage::ERROR
+					FlashMessage::ERROR
 				);
 			}
 		}

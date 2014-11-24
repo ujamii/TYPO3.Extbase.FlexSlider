@@ -1,9 +1,9 @@
 <?php
-
+namespace SotaStudio\Flexslider\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2013 Andy Hausmann <ah@sota-studio.de>
+ *  (c) 2012-2014 Andy Hausmann <ah@sota-studio.de>, SOTA Studio
  *
  *  All rights reserved
  *
@@ -24,57 +24,38 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * Model for the FlexSlider items.
  *
- * @author Andy Hausmann <ah@sota-studio.de>
+ * @author Andy Hausmann <ah@sota-studio.de>, SOTA Studio
  * @package flexslider
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @subpackage Domain\Model
  */
-class Tx_Flexslider_Domain_Model_FlexSlider extends Tx_Extbase_DomainObject_AbstractEntity {
+class FlexSlider extends AbstractEntity {
 
-	/**
-	 * name
-	 *
-	 * @var string
-	 */
+	/** @var string */
 	protected $name;
 
-	/**
-	 * title
-	 *
-	 * @var string
-	 */
+	/** @var string */
 	protected $title;
 
-	/**
-	 * subtitle
-	 *
-	 * @var string
-	 */
+	/** @var string */
 	protected $subtitle;
 
 	/**
-	 * image
-	 *
 	 * @var string
 	 * @validate NotEmpty
 	 */
 	protected $image;
 
-	/**
-	 * link
-	 *
-	 * @var string
-	 */
+	/** @var string */
 	protected $link;
 
-	/**
-	 * caption
-	 *
-	 * @var string
-	 */
+	/** @var string */
 	protected $caption;
+
 
 	/**
 	 * type

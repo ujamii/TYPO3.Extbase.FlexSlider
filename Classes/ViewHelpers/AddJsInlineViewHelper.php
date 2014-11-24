@@ -1,10 +1,10 @@
 <?php
-
+namespace SotaStudio\Flexslider\ViewHelpers;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2013 Andy Hausmann <ah@sota-studio.de>
- *  (c) 2012-2013 Xaver Maierhofer <xaver.maierhofer@xwissen.info>
+ *  (c) 2012-2014 Andy Hausmann <ah@sota-studio.de>, SOTA Studio
+ *  (c) 2012-2014 Xaver Maierhofer <xaver.maierhofer@xwissen.info>
  *
  *  All rights reserved
  *
@@ -25,6 +25,9 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use SotaStudio\Flexslider\Utility\Div,
+	TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
+
 /**
  *
  * Renders Inline JS via PageRenderer and enables Plugins to throw it into external files,
@@ -38,25 +41,25 @@
  * <output>
  * </output>
  *
- * @author Andy Hausmann <ah@sota-studio.de>
+ * @author Andy Hausmann <ah@sota-studio.de>, SOTA Studio
  * @author Xaver Maierhofer <xaver.maierhofer@xwissen.info>
  * @package flexslider
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @subpackage ViewHelpers
  */
-class Tx_Flexslider_ViewHelpers_AddJsInlineViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractTagBasedViewHelper {
+class AddJsInlineViewHelper extends AbstractTagBasedViewHelper {
 
 	/**
 	 * Adds JS and CSS to the frontend
 	 *
-	 * @param string  $code  The JS code
+	 * @param string $code JS Block
+	 * @param string $name Unique key to avoid multiple inclusions
 	 * @param bool  $moveToFooter  Move the the ending body tag?
-	 * @param string  $uniqueLabel  Unique label in order to avoid multiple code blocks of the same code.
 	 * @return void
 	 */
 
 	public function render($code = NULL, $name = '', $moveToFooter = FALSE) {
 		if ($code) {
-			Tx_Flexslider_Utility_Div::addJsInline(
+			Div::addJsInline(
 				$code,
 				$name,
 				$moveToFooter

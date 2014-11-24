@@ -1,9 +1,9 @@
 <?php
-
+namespace SotaStudio\Flexslider\Utility;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2013 Andy Hausmann <ah@sota-studio.de>
+ *  (c) 2012-2014 Andy Hausmann <ah@sota-studio.de>, SOTA Studio
  *
  *  All rights reserved
  *
@@ -24,14 +24,16 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use \TYPO3\CMS\Core\Utility\DebugUtility;
+
 /**
  * Helper Class which makes debugging tools available
  *
- * @author Andy Hausmann <ah@sota-studio.de>
+ * @author Andy Hausmann <ah@sota-studio.de>, SOTA Studio
  * @package flexslider
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @subpackage Utility
  */
-class Tx_Flexslider_Utility_Debug {
+class Debug {
 
 	/**
 	 * Helper function for debuggin purposes.
@@ -39,7 +41,7 @@ class Tx_Flexslider_Utility_Debug {
 	 * @param mixed $v Var to debug
 	 */
 	public static function debug($v) {
-		t3lib_utility_Debug::debug($v);
+		DebugUtility::debug($v);
 	}
 
 	/**
