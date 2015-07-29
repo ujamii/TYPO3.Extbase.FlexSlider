@@ -58,6 +58,27 @@ class FlexSlider extends AbstractEntity {
 
 
 	/**
+	 * type
+	 *
+	 * @var integer
+	 */
+	protected $type;
+
+	/**
+	 * @param int $type
+	 */
+	public function setType($type) {
+		$this->type = $type;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getType() {
+		return $this->type;
+	}
+
+	/**
 	 * Returns the name
 	 *
 	 * @return string $name
