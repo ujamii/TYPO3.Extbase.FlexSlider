@@ -1,9 +1,4 @@
 plugin.tx_flexslider {
-	view {
-		templateRootPath = {$plugin.tx_flexslider.view.templateRootPath}
-		partialRootPath = {$plugin.tx_flexslider.view.partialRootPath}
-		layoutRootPath = {$plugin.tx_flexslider.view.layoutRootPath}
-	}
 	persistence {
 		storagePid = {$plugin.tx_flexslider.persistence.storagePid}
 	}
