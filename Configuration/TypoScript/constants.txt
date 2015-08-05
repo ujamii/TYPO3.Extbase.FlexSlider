@@ -1,4 +1,12 @@
 plugin.tx_flexslider {
+	view {
+		# cat=plugin.tx_flexslider/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:flexslider/Resources/Private/Templates/
+		# cat=plugin.tx_flexslider/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:flexslider/Resources/Private/Partials/
+		# cat=plugin.tx_flexslider/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:flexslider/Resources/Private/Layouts/
+	}
 	persistence {
 		# cat=plugin.tx_flexslider//a; type=string; label=Default storage PID
 		storagePid =
