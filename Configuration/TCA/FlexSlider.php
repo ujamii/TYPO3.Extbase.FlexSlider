@@ -27,6 +27,7 @@ $TCA['tx_flexslider_domain_model_flexslider'] = array(
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
 			'config' => array(
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'foreign_table' => 'sys_language',
 				'foreign_table_where' => 'ORDER BY sys_language.title',
 				'items' => array(
@@ -41,6 +42,7 @@ $TCA['tx_flexslider_domain_model_flexslider'] = array(
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
 			'config' => array(
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'items' => array(
 					array('', 0),
 				),
@@ -151,14 +153,15 @@ $TCA['tx_flexslider_domain_model_flexslider'] = array(
 				'size' => 30,
 				'eval' => 'trim',
 				'wizards' => array(
-					'_PADDING' => 2,
-					'link' => array(
+					'link' => [
 						'type' => 'popup',
-						'title' => 'Link',
-						'icon' => 'link_popup.gif',
-						'script' => 'browse_links.php?mode=wizard',
-						'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-					)
+						'title' => 'LLL:EXT:cms/locallang_ttc.xlf:header_link_formlabel',
+						'icon' => 'EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_link.gif',
+						'module' => [
+							'name' => 'wizard_link',
+						],
+						'JSopenParams' => 'height=600,width=800,status=0,menubar=0,scrollbars=1'
+					]
 				)
 			),
 		),
@@ -176,6 +179,7 @@ $TCA['tx_flexslider_domain_model_flexslider'] = array(
 			'label' => $pathLL . 'tx_flexslider_domain_model_flexslider.type',
 			'config' => array(
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'items' => array(
 					array(
 						'',
@@ -197,12 +201,12 @@ $TCA['tx_flexslider_domain_model_flexslider'] = array(
 if ($configuration['extendSubtitleByRTE'])	{
 	$TCA['tx_flexslider_domain_model_flexslider']['columns']['subtitle']['config']['wizards'] = array(
 		'RTE' => array(
-			'icon' => 'wizard_rte2.gif',
-			'notNewRecords'=> 1,
+			'notNewRecords' => 1,
 			'RTEonly' => 1,
-			'script' => 'wizard_rte.php',
-			'title' => 'LLL:EXT:cms/locallang_ttc.xml:bodytext.W.RTE',
-			'type' => 'script'
+			'type' => 'script',
+			'title' => 'Full screen Rich Text Editing',
+			'icon' => 'wizard_rte2.gif',
+			'module' => array('name' => 'wizard_rte'),
 		),
 	);
 	$TCA['tx_flexslider_domain_model_flexslider']['columns']['subtitle']['defaultExtras'] = 'richtext[]';
